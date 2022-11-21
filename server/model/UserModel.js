@@ -34,6 +34,11 @@ const userSchema = mongoose.Schema({
       message: "Password {VALUE} is not strong enough.",
     },
   },
+  gender: {
+    required: true,
+    type: String,
+    enum: ["male", "female", "other"],
+  },
   userType: {
     type: String,
     enum: ["admin", "teacher", "student", "editor"],

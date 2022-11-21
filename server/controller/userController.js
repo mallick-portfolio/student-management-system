@@ -23,6 +23,7 @@ exports.getUsers = async (req, res, next) => {
 exports.signup = async (req, res, next) => {
   try {
     const errors = validationResult(req);
+    console.log(errors);
 
     if (!errors.isEmpty()) {
       return res.status(400).json({
