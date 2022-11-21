@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const { ObjectId } = mongoose.Schema.Types;
+const bcrypt = require("bcrypt");
 const validator = require("validator");
 const userSchema = mongoose.Schema({
   userName: {
@@ -22,7 +22,7 @@ const userSchema = mongoose.Schema({
     required: true,
     validate: {
       validator: (value) => {
-        validator.isStringPassword(value, {
+        validator.isStrongPassword(value, {
           minLength: 8,
           minLowercase: 1,
           minNumbers: 1,
@@ -38,6 +38,12 @@ const userSchema = mongoose.Schema({
     enum: ["admin", "teacher", "student", "editor"],
     default: "student",
   },
+});
+
+userSchema.pre("save", async function (next) {
+  const hashPassword = bcrypt.hashSync(this.password, 10);
+  this.password = hashPassword;
+  next();
 });
 
 const User = mongoose.model("User", userSchema);
