@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { EyeIcon } from "@heroicons/react/24/solid";
+import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/solid";
+import { useNavigate } from "react-router-dom";
 import * as yup from "yup";
+import { useSignupUserMutation } from "../../features/api/userApi";
 const schema = yup
   .object({
     userName: yup.string().required("User name is required"),
@@ -14,10 +16,10 @@ const schema = yup
     password: yup
       .string()
       .required("Password is required")
-      .min(8, "Password is too short - should be 8 chars minimum.")
+      .min(8, "Password is too short")
       .matches(
         /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})/,
-        "One Uppercase, One Lowercase, One Number and One Special Case Character"
+        "1 Uppercase, 1 Lowercase, 1 Number and 1 Special Character"
       ),
     confirmPassword: yup
       .string()
@@ -27,7 +29,10 @@ const schema = yup
   .required();
 
 const Signup = () => {
+  const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
+  const [signup, result] = useSignupUserMutation();
+  console.log(result?.error?.data?.error);
   const {
     register,
     handleSubmit,
@@ -35,7 +40,15 @@ const Signup = () => {
   } = useForm({
     resolver: yupResolver(schema),
   });
-  const onSubmit = (data) => console.log(data);
+  const onSubmit = async ({ confirmPassword, ...data }) => {
+    const abc = await signup(data);
+    if (result.isSuccess) {
+      console.log("hello world", result.isSuccess);
+      navigate("/");
+    } else {
+      navigate("/signup");
+    }
+  };
   return (
     <div className="w-screen h-screen flex justify-center bg-body-bg dark:bg-d-body-bg items-center">
       <div className="w-auto lg:w-1/3 md:w-1/2 bg-gradient-box-w dark:bg-d-gradient-box-w shadow-light-white-3 dark:shadow-dark-white-3 rounded-lg p-8">
@@ -91,11 +104,16 @@ const Signup = () => {
               <input
                 {...register("password")}
                 id="password"
-                type="password"
-                placeholder="example@gmail.com"
+                type={`${showPassword ? "text" : "password"}`}
+                placeholder="*************"
                 className="w-full py-3 pl-4 rounded-md outline-none border bg-color-border-white dark:bg-d-color-border-white border-dark dark:border-d-dark text-d-dark dark:text-dark font-medium text-sm lg:text-base"
               />
-              <EyeIcon className="h-6 text-secondary dark:text-d-secondary w-6 right-3 cursor-pointer top-[43px] absolute" />
+              {/* <button
+                className="h-6 text-secondary dark:text-d-secondary w-6 right-3 cursor-pointer top-[43px] -translate-y-[1%] absolute"
+                onClick={() => setShowPassword(!showPassword)}
+              >
+                {showPassword ? <EyeIcon /> : <EyeSlashIcon />}
+              </button> */}
             </div>
             <div className="py-1">
               <label
@@ -110,8 +128,8 @@ const Signup = () => {
               <input
                 {...register("confirmPassword")}
                 id="confirmPassword"
-                type="password"
-                placeholder="example@gmail.com"
+                type={`${showPassword ? "text" : "password"}`}
+                placeholder="*************"
                 className="w-full py-3 pl-4 rounded-md outline-none border bg-color-border-white dark:bg-d-color-border-white border-dark dark:border-d-dark text-d-dark dark:text-dark font-medium text-sm lg:text-base"
               />
             </div>
