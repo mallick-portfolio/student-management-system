@@ -1,0 +1,28 @@
+import { createBrowserRouter } from "react-router-dom";
+import Login from "./pages/auth/Login";
+import Signup from "./pages/auth/Signup";
+import RootLayout from "./pages/layout/RootLayout";
+import PageNotFound from "./pages/PageNotFound";
+
+const routers = createBrowserRouter([
+  {
+    element: <RootLayout />,
+    errorElement: <PageNotFound />,
+    path: "/",
+    // children: [
+    //   {
+    //     path: "/",
+    //     element: <Footer />,
+    //   },
+    // ],
+  },
+  {
+    element: <Login />,
+    path: "/signin",
+  },
+  {
+    element: <Signup />,
+    path: "/signup",
+  },
+]);
+export default routers;
