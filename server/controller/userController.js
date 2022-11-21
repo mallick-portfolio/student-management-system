@@ -1,5 +1,5 @@
 const userServices = require("../services/userServices");
-
+const { validationResult } = require("express-validator");
 exports.getUsers = async (req, res, next) => {
   try {
     const result = await userServices.getUsers();
@@ -22,6 +22,14 @@ exports.getUsers = async (req, res, next) => {
 
 exports.signup = async (req, res, next) => {
   try {
+    const errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+      return res.status(400).json({
+        success: false,
+        errors: errors.array(),
+      });
+    }
     const result = await userServices.signUpServices(req.body);
     if (!result._id) {
       res.status(402).json({

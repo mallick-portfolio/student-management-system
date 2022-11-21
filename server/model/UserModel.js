@@ -6,6 +6,7 @@ const userSchema = mongoose.Schema({
     type: String,
     required: [true, "Please provide your userName"],
     trim: true,
+    minLength: 5,
     lowercase: true,
     unique: [true, "Already name exist"],
   },
@@ -29,8 +30,8 @@ const userSchema = mongoose.Schema({
           minUppercase: 1,
           minSymbols: 1,
         });
-        message: "Password {VALUE} is not strong enough.";
       },
+      message: "Password {VALUE} is not strong enough.",
     },
   },
   userType: {
