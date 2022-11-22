@@ -9,7 +9,7 @@ router.post("/login", userController.login);
 router.get(
   "/",
   verifyUser,
-  authorization("admin", "teacher", "student"),
+  authorization("admin", "teacher"),
   userController.getUsers
 );
 router.route("/:id").delete(userController.deleteUserById).patch();
