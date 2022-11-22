@@ -23,7 +23,6 @@ exports.getUsers = async (req, res, next) => {
 
 exports.getUser = async (req, res, next) => {
   try {
-    console.log(req.email)
     const user = await userServices.getUserServices(req.email);
     if (!user) {
       return res.status(404).json({

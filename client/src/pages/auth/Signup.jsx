@@ -43,7 +43,6 @@ const Signup = () => {
   });
   const onSubmit = async ({ confirmPassword, ...data }) => {
     const res = await signup(data);
-    console.log(res.data);
     if (res.data.status === "success") {
       toast.success(res?.data.message);
       navigate("/");

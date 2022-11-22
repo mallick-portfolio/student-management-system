@@ -5,12 +5,10 @@ const generateToken = (user) => {
     email: user.email,
     userType: user.userType,
   };
-  const expiresIn = "5m";
-  const jwtOptions = {
-    expiresIn: expiresIn,
-    algorithms: ["RS256"],
-  };
-  const token = jwt.sign(payload, process.env.JWT_SECRET, jwtOptions);
+
+  const token = jwt.sign(payload, process.env.JWT_SECRET, {
+    expiresIn: "7days",
+  });
   return token;
 };
 

@@ -27,7 +27,6 @@ exports.signOutServices = async (email, data) => {
 exports.deleteUserById = async (id) => {
   const result = await User.deleteOne({ _id: id });
   if (result.deletedCount === 1) {
-    console.log(result);
     return result;
   } else {
     return false;
@@ -40,7 +39,6 @@ exports.findUserByEmail = async (email) => {
 };
 exports.checkUserName = async (userName) => {
   const result = await User.findOne({ userName });
-  console.log(result);
   return result;
 };
 
