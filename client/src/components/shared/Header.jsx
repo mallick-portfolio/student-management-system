@@ -23,7 +23,7 @@ const Header = () => {
   }
 
   return (
-    <div className="container flex py-4 justify-between items-center">
+    <div className="header-container">
       <div>
         <h2 className="title2 text-secondary dark:text-d-secondary">
           <Link to={"/"}>
@@ -34,35 +34,35 @@ const Header = () => {
       {/* Large device menu */}
       <div className="hidden lg:block">
         <ul className="flex items-center gap-6">
-          <li className="text-sm md:text-base font-semibold text-secondary dark:text-d-secondary">
+          <li className="header-nav-item">
             <Link to={"/"}>Home</Link>
           </li>
-          <li className="text-sm md:text-base font-semibold text-secondary dark:text-d-secondary">
+          <li className="header-nav-item">
             <Link to={"/"}>About</Link>
           </li>
-          <li className="text-sm md:text-base font-semibold text-secondary dark:text-d-secondary">
+          <li className="header-nav-item">
             <Link to={"/"}>Contact Us</Link>
           </li>
-          <li className="text-sm md:text-base font-semibold text-secondary dark:text-d-secondary">
+          <li className="header-nav-item">
             <Link to={"/"}>Research</Link>
           </li>
           {status === "active" ? (
             <li className="relative">
               <button onClick={() => setActive(!active)}>
                 <img
-                  className="w-12 rounded-full border-2 border-primary dark:border-primary"
+                  className="header-image"
                   src="https://placeimg.com/192/192/people"
                   alt="user avatar"
                 />
               </button>
               <div
-                className={`absolute z-50 w-64 rounded-md text-left py-6 text-secondary dark:text-d-secondary bg-gradient-box-w dark:bg-d-gradient-box-w shadow-light-white-3 ease-in duration-300 dark:shadow-dark-white-3 ${
+                className={`header-dashboard-card ${
                   active ? "top-14 right-5" : "right-5 top-[-500px]"
                 }`}
               >
                 <div className="flex flex-col items-center">
                   <img
-                    className="w-16 rounded-full border-2 border-primary dark:border-primary"
+                    className="header-dashboard-image"
                     src="https://placeimg.com/192/192/people"
                     alt="user avatar"
                   />
@@ -92,19 +92,19 @@ const Header = () => {
       </div>
       <div className="block lg:hidden">
         <button onClick={() => setShow(!show)} className="">
-          <Bars3Icon className="w-12 h-8 text-secondary dark:text-d-secondary bg-gradient-box-w dark:bg-d-gradient-box-w rounded-full shadow-light-white-3 dark:shadow-dark-white-3" />
+          <Bars3Icon className="header-bar-btn" />
         </button>
       </div>
 
       {/* Mobile device Menu */}
       <div
-        className={`block lg:hidden bg-gradient-box-w dark:bg-d-gradient-box-w fixed h-screen z-40 w-72 ease-in duration-300 ${
+        className={`header-mobile-menu ${
           show ? "top-0 right-0" : "top-0 right-[-500px]"
         }`}
       >
         <div>
           <button onClick={() => setShow(!show)}>
-            <XMarkIcon className="w-10 p-1 h-10 absolute top-4 -left-4 text-secondary dark:text-d-secondary shadow-light-white-3 dark:shadow-dark-white-3 rounded-full bg-gradient-box-w dark:bg-d-gradient-box-w" />
+            <XMarkIcon className="header-xmar-btn" />
           </button>
         </div>
         <div className="mx-auto flex flex-col items-center pt-5">
@@ -116,7 +116,7 @@ const Header = () => {
             />
           </button>
           <div
-            className={`absolute z-50 w-64 rounded-md text-left py-6 text-secondary dark:text-d-secondary bg-gradient-box-w dark:bg-d-gradient-box-w shadow-light-white-3 ease-in duration-300 dark:shadow-dark-white-3 ${
+            className={`header-dashboard-card ${
               active ? "top-24 right-16" : "right-16 top-[-500px]"
             }`}
           >
@@ -126,6 +126,7 @@ const Header = () => {
                 src="https://placeimg.com/192/192/people"
                 alt="user avatar"
               />
+
               <button className="common-btn1">View Profile</button>
             </div>
             <ul className="pl-5 flex flex-col gap-3 pt-4">
@@ -144,29 +145,18 @@ const Header = () => {
           </div>
         </div>
         <ul className="flex flex-col items-start pl-8 pt-8 gap-2">
-          <li className="text-sm md:text-base font-semibold text-secondary dark:text-d-secondary">
+          <li className="header-nav-item">
             <Link to={"/"}>Home</Link>
           </li>
-          <li className="text-sm md:text-base font-semibold text-secondary dark:text-d-secondary">
+          <li className="header-nav-item">
             <Link to={"/"}>About</Link>
           </li>
-          <li className="text-sm md:text-base font-semibold text-secondary dark:text-d-secondary">
+          <li className="header-nav-item">
             <Link to={"/"}>Contact Us</Link>
           </li>
-          <li className="text-sm md:text-base font-semibold text-secondary dark:text-d-secondary">
+          <li className="header-nav-item">
             <Link to={"/"}>Research</Link>
           </li>
-          {status === "active" ? (
-            <li className="common-btn1">
-              <button onClick={() => signout({ status: "inactive" })}>
-                Sign out
-              </button>
-            </li>
-          ) : (
-            <li className="common-btn1">
-              <Link to={"/login"}>Login</Link>
-            </li>
-          )}
         </ul>
       </div>
     </div>

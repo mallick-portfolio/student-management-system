@@ -51,4 +51,28 @@ html {
   .signup-already {
     @apply mt-2 text-base font-medium text-d-dark dark:text-dark;
   }
+  .header-container {
+    @apply container flex py-4 justify-between items-center;
+  }
+  .header-nav-item {
+    @apply text-sm md:text-base font-semibold text-secondary dark:text-d-secondary;
+  }
+  .header-image {
+    @apply w-12 rounded-full border-2 border-primary dark:border-primary;
+  }
+  .header-dashboard-card {
+    @apply absolute z-50 w-64 rounded-md text-left py-6 text-secondary dark:text-d-secondary bg-gradient-box-w dark:bg-d-gradient-box-w shadow-light-white-3 ease-in duration-300 dark:shadow-dark-white-3;
+  }
+  .header-dashboard-image {
+    @apply w-16 rounded-full border-2 border-primary dark:border-primary;
+  }
+  .header-bar-btn {
+    @apply w-12 h-8 text-secondary dark:text-d-secondary bg-gradient-box-w dark:bg-d-gradient-box-w rounded-full shadow-light-white-3 dark:shadow-dark-white-3;
+  }
+  .header-xmar-btn {
+    @apply w-10 p-1 h-10 absolute top-4 -left-4 text-secondary dark:text-d-secondary shadow-light-white-3 dark:shadow-dark-white-3 rounded-full bg-gradient-box-w dark:bg-d-gradient-box-w;
+  }
+  .header-mobile-menu {
+    @apply block lg:hidden bg-gradient-box-w dark:bg-d-gradient-box-w fixed h-screen z-40 w-72 ease-in duration-300;
+  }
 }
