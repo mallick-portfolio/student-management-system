@@ -27,6 +27,9 @@ html {
   .common-btn1 {
     @apply text-sm md:text-base font-semibold cursor-pointer text-center rounded-md mt-2 bg-gradient-box-w dark:bg-d-gradient-box-w px-6 text-secondary dark:text-d-secondary py-3 shadow-light-white-3 dark:shadow-dark-white-3;
   }
+  .header-nav-item {
+    @apply text-sm md:text-base font-semibold text-secondary dark:text-d-secondary;
+  }
 }
 
 @layer utilities {
@@ -54,9 +57,7 @@ html {
   .header-container {
     @apply container flex py-4 justify-between items-center;
   }
-  .header-nav-item {
-    @apply text-sm md:text-base font-semibold text-secondary dark:text-d-secondary;
-  }
+
   .header-image {
     @apply w-12 rounded-full border-2 border-primary dark:border-primary;
   }

@@ -31,6 +31,7 @@ const Header = () => {
           </Link>
         </h2>
       </div>
+
       {/* Large device menu */}
       <div className="hidden lg:block">
         <ul className="flex items-center gap-6">
@@ -38,7 +39,7 @@ const Header = () => {
             <Link to={"/"}>Home</Link>
           </li>
           <li className="header-nav-item">
-            <Link to={"/"}>About</Link>
+            <Link to={"/dashboard/student"}>About</Link>
           </li>
           <li className="header-nav-item">
             <Link to={"/"}>Contact Us</Link>
@@ -107,43 +108,39 @@ const Header = () => {
             <XMarkIcon className="header-xmar-btn" />
           </button>
         </div>
-        <div className="mx-auto flex flex-col items-center pt-5">
-          <button onClick={() => setActive(!active)}>
-            <img
-              className="w-12 rounded-full border-2 border-primary dark:border-primary"
-              src="https://placeimg.com/192/192/people"
-              alt="user avatar"
-            />
-          </button>
-          <div
-            className={`header-dashboard-card ${
-              active ? "top-24 right-16" : "right-16 top-[-500px]"
-            }`}
-          >
-            <div className="flex flex-col items-center">
+        {status === "active" && (
+          <div className="mx-auto flex flex-col items-center pt-5">
+            <button onClick={() => setActive(!active)}>
               <img
-                className="w-16 rounded-full border-2 border-primary dark:border-primary"
+                className="w-12 rounded-full border-2 border-primary dark:border-primary"
                 src="https://placeimg.com/192/192/people"
                 alt="user avatar"
               />
-
-              <button className="common-btn1">View Profile</button>
-            </div>
-            <ul className="pl-5 flex flex-col gap-3 pt-4">
-              <li>User</li>
-              <li>Teacher</li>
-              <li>Editor</li>
-            </ul>
-            <div className="flex flex-col items-center">
-              <button
-                className="common-btn1"
-                onClick={() => signout({ status: "inactive" })}
-              >
-                Sign out
-              </button>
+            </button>
+            <div
+              className={`header-dashboard-card ${
+                active ? "top-24 right-16" : "right-16 top-[-500px]"
+              }`}
+            >
+              <div className="flex flex-col items-center">
+                <button className="common-btn1">View Profile</button>
+              </div>
+              <ul className="pl-5 flex flex-col gap-3 pt-4">
+                <li>User</li>
+                <li>Teacher</li>
+                <li>Editor</li>
+              </ul>
+              <div className="flex flex-col items-center">
+                <button
+                  className="common-btn1"
+                  onClick={() => signout({ status: "inactive" })}
+                >
+                  Sign out
+                </button>
+              </div>
             </div>
           </div>
-        </div>
+        )}
         <ul className="flex flex-col items-start pl-8 pt-8 gap-2">
           <li className="header-nav-item">
             <Link to={"/"}>Home</Link>
@@ -157,6 +154,11 @@ const Header = () => {
           <li className="header-nav-item">
             <Link to={"/"}>Research</Link>
           </li>
+          {status === "inactive" && (
+            <li className="common-btn1">
+              <Link to={"/login"}>Login</Link>
+            </li>
+          )}
         </ul>
       </div>
     </div>
