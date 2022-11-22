@@ -26,8 +26,8 @@ const Login = () => {
   });
   const onSubmit = async (data) => {
     const res = await signup(data);
-    console.log(res.data);
     if (res.data.status === "success") {
+      localStorage.setItem("accessToken", `Berear ${res.data.token}`);
       toast.success(res?.data.message);
       navigate("/");
     } else {

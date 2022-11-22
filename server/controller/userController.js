@@ -1,5 +1,6 @@
 const userServices = require("../services/userServices");
 const { validationResult } = require("express-validator");
+const generateToken = require("../utils/generateToken");
 exports.getUsers = async (req, res, next) => {
   try {
     const result = await userServices.getUsers();
@@ -79,9 +80,12 @@ exports.login = async (req, res, next) => {
       });
     }
 
+    const token = generateToken(user);
+
     res.status(200).json({
       status: "success",
       message: "Your Login Successfull",
+      token: token,
     });
   } catch (error) {
     next(error);
