@@ -22,15 +22,23 @@ exports.getUsers = async (req, res, next) => {
 
 exports.signup = async (req, res, next) => {
   try {
-    const errors = validationResult(req);
-    console.log(errors);
+    const existUser = await userServices.findUserByEmail(req.body.email);
+    const existName = await userServices.checkUserName(req.body.userName);
 
-    if (!errors.isEmpty()) {
-      return res.status(400).json({
-        success: false,
-        errors: errors.array(),
+    if (existUser) {
+      return res.status(200).json({
+        status: "fail",
+        error: "User already exist with this email",
       });
     }
+    if (existName) {
+      return res.status(200).json({
+        status: "fail",
+        error:
+          "This username already is already exist. Please provide another one",
+      });
+    }
+
     const result = await userServices.signUpServices(req.body);
     if (!result._id) {
       res.status(402).json({
@@ -39,11 +47,42 @@ exports.signup = async (req, res, next) => {
       });
     } else {
       res.status(200).json({
-        status: "fail",
-        message: "User added successfully",
+        status: "success",
+        message: "Your Signup Successfull",
         data: result,
       });
     }
+  } catch (error) {
+    next(error);
+  }
+};
+
+exports.login = async (req, res, next) => {
+  try {
+    const user = await userServices.findUserByEmail(req.body.email);
+
+    if (!user) {
+      return res.status(202).json({
+        status: "fail",
+        error: "User not found with this Email",
+      });
+    }
+
+    const password = userServices.hashPassword(
+      req.body.password,
+      user.password
+    );
+    if (!password) {
+      return res.status(202).json({
+        status: "fail",
+        error: "Your password is not correct.Please provide valid password",
+      });
+    }
+
+    res.status(200).json({
+      status: "success",
+      message: "Your Login Successfull",
+    });
   } catch (error) {
     next(error);
   }

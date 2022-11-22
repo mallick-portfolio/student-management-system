@@ -1,12 +1,16 @@
 const User = require("../model/UserModel");
-
+const bcrypt = require("bcrypt");
 exports.getUsers = async () => {
-  const result = await User.find({});
+  const result = await User.find({}).select("-password");
   return result;
 };
 
 exports.signUpServices = async (data) => {
   const result = await User.create(data);
+  return result;
+};
+exports.loginServices = async (data) => {
+  const result = await User.findOne(data);
   return result;
 };
 
@@ -23,4 +27,13 @@ exports.deleteUserById = async (id) => {
 exports.findUserByEmail = async (email) => {
   const result = await User.findOne({ email });
   return result;
+};
+exports.checkUserName = async (userName) => {
+  const result = await User.findOne({ userName });
+  console.log(result);
+  return result;
+};
+
+exports.hashPassword = (password, userPassowrd) => {
+  return bcrypt.compareSync(password, userPassowrd);
 };

@@ -1,7 +1,7 @@
 exports.errorHander = async (error, req, res, next) => {
   res.status(500).json({
     status: "fail",
-    message: "Server error",
+    message: error.message,
     error,
   });
 };

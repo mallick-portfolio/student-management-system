@@ -5,6 +5,7 @@ import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/solid";
 import { useNavigate } from "react-router-dom";
 import * as yup from "yup";
 import { useSignupUserMutation } from "../../features/api/userApi";
+import { toast } from "react-toastify";
 const schema = yup
   .object({
     userName: yup.string().required("User name is required"),
@@ -16,11 +17,11 @@ const schema = yup
     password: yup
       .string()
       .required("Password is required")
-      .min(8, "Password is too short")
-      .matches(
-        /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})/,
-        "1 Uppercase, 1 Lowercase, 1 Number and 1 Special Character"
-      ),
+      .min(8, "Password is too short"),
+    // .matches(
+    //   /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})/,
+    //   "1 Uppercase, 1 Lowercase, 1 Number and 1 Special Character"
+    // )
     confirmPassword: yup
       .string()
       .oneOf([yup.ref("password"), null], "Passwords does't match")
@@ -32,7 +33,7 @@ const Signup = () => {
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [signup, result] = useSignupUserMutation();
-  console.log(result?.error?.data?.error);
+
   const {
     register,
     handleSubmit,
@@ -41,27 +42,25 @@ const Signup = () => {
     resolver: yupResolver(schema),
   });
   const onSubmit = async ({ confirmPassword, ...data }) => {
-    const abc = await signup(data);
-    if (result.isSuccess) {
-      console.log("hello world", result.isSuccess);
+    const res = await signup(data);
+    console.log(res.data);
+    if (res.data.status === "success") {
+      toast.success(res?.data.message);
       navigate("/");
     } else {
-      navigate("/signup");
+      toast.warning(res?.data.error);
+      navigate("/register");
     }
   };
+
   return (
-    <div className="w-screen h-screen flex justify-center bg-body-bg dark:bg-d-body-bg items-center">
-      <div className="w-auto lg:w-1/3 md:w-1/2 bg-gradient-box-w dark:bg-d-gradient-box-w shadow-light-white-3 dark:shadow-dark-white-3 rounded-lg p-8">
+    <div className="signup-container">
+      <div className="signup-card-box">
         <div>
           <form onSubmit={handleSubmit(onSubmit)}>
-            <h2 className="title1 text-center text-color-lightn dark:text-d-color-lightn pb-4">
-              Sing Up
-            </h2>
+            <h2 className="signup-title">Sing Up</h2>
             <div className="py-1">
-              <label
-                className="inline-block mb-1 text-sm lg:text-base text-secondary dark:text-d-secondary"
-                htmlFor="userName"
-              >
+              <label className="signup-label" htmlFor="userName">
                 User Name{" "}
                 <span className="text-primary">
                   *{errors.userName?.message}
@@ -72,14 +71,11 @@ const Signup = () => {
                 {...register("userName")}
                 type="text"
                 placeholder="Enter your User Name"
-                className="w-full py-3 pl-4 rounded-md outline-none border bg-color-border-white dark:bg-d-color-border-white border-dark dark:border-d-dark text-d-dark dark:text-dark font-medium text-sm lg:text-base"
+                className="signup-input"
               />
             </div>
             <div className="py-1">
-              <label
-                className="inline-block mb-1 text-sm lg:text-base text-secondary dark:text-d-secondary"
-                htmlFor="email"
-              >
+              <label className="signup-label" htmlFor="email">
                 Email{" "}
                 <span className="text-primary">*{errors.email?.message}</span>
               </label>
@@ -88,14 +84,11 @@ const Signup = () => {
                 {...register("email")}
                 type="email"
                 placeholder="example@gmail.com"
-                className="w-full py-3 pl-4 rounded-md outline-none border bg-color-border-white dark:bg-d-color-border-white border-dark dark:border-d-dark text-d-dark dark:text-dark font-medium text-sm lg:text-base"
+                className="signup-input"
               />
             </div>
             <div className="py-1 relative">
-              <label
-                className="inline-block mb-1 text-sm lg:text-base text-secondary dark:text-d-secondary"
-                htmlFor="password"
-              >
+              <label className="signup-label" htmlFor="password">
                 Password{" "}
                 <span className="text-primary">
                   *{errors.password?.message}
@@ -106,7 +99,7 @@ const Signup = () => {
                 id="password"
                 type={`${showPassword ? "text" : "password"}`}
                 placeholder="*************"
-                className="w-full py-3 pl-4 rounded-md outline-none border bg-color-border-white dark:bg-d-color-border-white border-dark dark:border-d-dark text-d-dark dark:text-dark font-medium text-sm lg:text-base"
+                className="signup-input"
               />
               {/* <button
                 className="h-6 text-secondary dark:text-d-secondary w-6 right-3 cursor-pointer top-[43px] -translate-y-[1%] absolute"
@@ -116,10 +109,7 @@ const Signup = () => {
               </button> */}
             </div>
             <div className="py-1">
-              <label
-                className="inline-block mb-1 text-sm lg:text-base text-secondary dark:text-d-secondary"
-                htmlFor="confirmPassword"
-              >
+              <label className="signup-label" htmlFor="confirmPassword">
                 Confirm Password{" "}
                 <span className="text-primary">
                   *{errors.confirmPassword?.message}
@@ -130,12 +120,12 @@ const Signup = () => {
                 id="confirmPassword"
                 type={`${showPassword ? "text" : "password"}`}
                 placeholder="*************"
-                className="w-full py-3 pl-4 rounded-md outline-none border bg-color-border-white dark:bg-d-color-border-white border-dark dark:border-d-dark text-d-dark dark:text-dark font-medium text-sm lg:text-base"
+                className="signup-input"
               />
             </div>
             <div className="w-full">
               <input
-                className="text-base lg:text-xl w-auto cursor-pointer flex justify-center items-center mx-auto text-center rounded-md mt-2 bg-gradient-box-w dark:bg-d-gradient-box-w px-6 text-d-dark dark:text-dark py-3 shadow-light-white-3 dark:shadow-dark-white-3"
+                className="singup-submit-btn"
                 type="submit"
                 value="Signup"
               />
