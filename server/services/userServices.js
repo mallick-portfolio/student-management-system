@@ -1,7 +1,11 @@
 const User = require("../model/UserModel");
 const bcrypt = require("bcrypt");
-exports.getUsers = async () => {
+exports.getUsersServices = async () => {
   const result = await User.find({}).select("-password");
+  return result;
+};
+exports.getUserServices = async (email) => {
+  const result = await User.findOne({ email }).select("-password");
   return result;
 };
 
@@ -11,6 +15,12 @@ exports.signUpServices = async (data) => {
 };
 exports.loginServices = async (data) => {
   const result = await User.findOne(data);
+  return result;
+};
+exports.signOutServices = async (email, data) => {
+  const result = await User.updateOne({ email }, data, {
+    runValidators: true,
+  });
   return result;
 };
 

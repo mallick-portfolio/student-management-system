@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/solid";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import * as yup from "yup";
 import { useSignupUserMutation } from "../../features/api/userApi";
 import { toast } from "react-toastify";
@@ -17,11 +17,11 @@ const schema = yup
     password: yup
       .string()
       .required("Password is required")
-      .min(8, "Password is too short"),
-    // .matches(
-    //   /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})/,
-    //   "1 Uppercase, 1 Lowercase, 1 Number and 1 Special Character"
-    // )
+      .min(8, "Password is too short")
+      .matches(
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})/,
+        "1 Uppercase, 1 Lowercase, 1 Number and 1 Special Character"
+      ),
     confirmPassword: yup
       .string()
       .oneOf([yup.ref("password"), null], "Passwords does't match")
@@ -130,6 +130,12 @@ const Signup = () => {
                 value="Signup"
               />
             </div>
+            <p className="signup-already">
+              Already have an account.{" "}
+              <span className="text-primary">
+                <Link to={"/login"}>Login</Link>
+              </span>
+            </p>
           </form>
         </div>
       </div>

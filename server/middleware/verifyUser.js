@@ -4,8 +4,8 @@ const verifyUser = (req, res, next) => {
   const authorization = req.headers.authorization;
   const token = authorization.split(" ")[1];
   const decoded = jwt.decode(token, process.env.JWT_SECRET);
-  if (!decoded.email) {
-    return next("Auothorization access");
+  if (!decoded) {
+    return next("Auothorization access from verification");
   } else {
     req.email = decoded.email;
     req.userType = decoded.userType;

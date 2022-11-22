@@ -24,6 +24,9 @@ html {
   .title5 {
     @apply text-sm sm:text-base md:text-xl lg:text-2xl font-normal;
   }
+  .common-btn1 {
+    @apply text-sm md:text-base font-semibold cursor-pointer text-center rounded-md mt-2 bg-gradient-box-w dark:bg-d-gradient-box-w px-6 text-secondary dark:text-d-secondary py-3 shadow-light-white-3 dark:shadow-dark-white-3;
+  }
 }
 
 @layer utilities {
@@ -31,10 +34,10 @@ html {
     @apply w-screen h-screen flex justify-center bg-body-bg dark:bg-d-body-bg items-center;
   }
   .signup-card-box {
-    @apply w-auto lg:w-1/3 md:w-1/2 bg-gradient-box-w dark:bg-d-gradient-box-w shadow-light-white-3 dark:shadow-dark-white-3 rounded-lg p-8;
+    @apply w-auto xl:w-1/3 lg:w-1/2 bg-gradient-box-w dark:bg-d-gradient-box-w shadow-light-white-3 dark:shadow-dark-white-3 rounded-lg py-6 px-8 lg:py-8 lg:px-12;
   }
   .signup-title {
-    @apply title1 text-center text-color-lightn dark:text-d-color-lightn pb-4;
+    @apply title2 text-center text-color-lightn dark:text-d-color-lightn pb-4;
   }
   .signup-label {
     @apply inline-block mb-1 text-sm lg:text-base text-secondary dark:text-d-secondary;
@@ -43,6 +46,9 @@ html {
     @apply w-full py-3 pl-4 rounded-md outline-none border bg-color-border-white dark:bg-d-color-border-white border-dark dark:border-d-dark text-d-dark dark:text-dark font-medium text-sm lg:text-base;
   }
   .singup-submit-btn {
-    @apply text-base lg:text-xl w-auto cursor-pointer font-medium flex justify-center items-center mx-auto text-center rounded-md mt-2 bg-gradient-box-w dark:bg-d-gradient-box-w px-6 text-d-dark dark:text-dark py-3 shadow-light-white-3 dark:shadow-dark-white-3;
+    @apply text-base lg:text-xl cursor-pointer font-medium flex justify-center items-center mx-auto w-full text-center rounded-md mt-2 bg-gradient-box-w dark:bg-d-gradient-box-w px-6 text-d-dark dark:text-dark py-3 shadow-light-white-3 dark:shadow-dark-white-3;
+  }
+  .signup-already {
+    @apply mt-2 text-base font-medium text-d-dark dark:text-dark;
   }
 }

@@ -1,12 +1,29 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
+import {
+  useGetUserQuery,
+  useSignOutUserMutation,
+} from "../../features/api/userApi";
 
 const Header = () => {
+  const { data, error, isLoading } = useGetUserQuery();
+  const [signout] = useSignOutUserMutation();
+
+  const status = data?.data?.status;
+  if (error) {
+    console.log(error);
+  }
+  if (isLoading) {
+    return "loading...";
+  }
+
   return (
     <div className="container flex py-4 justify-between items-center">
       <div>
         <h2 className="title2 text-secondary dark:text-d-secondary">
-          IU<span className="text-primary">CSE</span>
+          <Link to={"/"}>
+            IU<span className="text-primary">CSE</span>
+          </Link>
         </h2>
       </div>
       {/* Large device menu */}
@@ -24,12 +41,17 @@ const Header = () => {
           <li className="text-sm md:text-base font-semibold text-secondary dark:text-d-secondary">
             <Link to={"/"}>Research</Link>
           </li>
-          <li className="text-sm md:text-base font-semibold text-secondary dark:text-d-secondary">
-            <Link to={"/register"}>Register</Link>
-          </li>
-          <li className="text-sm md:text-base font-semibold text-secondary dark:text-d-secondary">
-            <Link to={"/login"}>Login</Link>
-          </li>
+          {status === "inactive" ? (
+            <li className="common-btn1">
+              <Link to={"/login"}>Login</Link>
+            </li>
+          ) : (
+            <li className="common-btn1">
+              <button onClick={() => signout({ status: "inactive" })}>
+                Sign out
+              </button>
+            </li>
+          )}
         </ul>
       </div>
     </div>

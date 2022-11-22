@@ -3,8 +3,8 @@ const { validationResult } = require("express-validator");
 const generateToken = require("../utils/generateToken");
 exports.getUsers = async (req, res, next) => {
   try {
-    const result = await userServices.getUsers();
-    if (result.length < 0) {
+    const result = await userServices.getUsersServices();
+    if (!result) {
       res.status(402).json({
         status: "fail",
         error: "Failed to get users",
@@ -16,6 +16,25 @@ exports.getUsers = async (req, res, next) => {
         data: result,
       });
     }
+  } catch (error) {
+    next(error);
+  }
+};
+
+exports.getUser = async (req, res, next) => {
+  try {
+    const user = await userServices.getUserServices(req.email);
+    if (!user) {
+      return res.status(404).json({
+        status: "fail",
+        error: "Auothorization access",
+      });
+    }
+    res.status(200).json({
+      status: "success",
+      message: "User information get successfull",
+      data: user,
+    });
   } catch (error) {
     next(error);
   }
@@ -92,6 +111,34 @@ exports.login = async (req, res, next) => {
   }
 };
 
+exports.signout = async (req, res, next) => {
+  try {
+    const user = await userServices.findUserByEmail(req.email);
+
+    if (!user) {
+      return res.status(202).json({
+        status: "fail",
+        error: "User not found with this Email",
+      });
+    }
+
+    const result = await userServices.signOutServices(req.email, req.body);
+
+    if (!result) {
+      return res.status(202).json({
+        status: "fail",
+        error: "Failed to signout",
+      });
+    }
+
+    res.status(200).json({
+      status: "success",
+      message: "Signout Successful",
+    });
+  } catch (error) {
+    next(error);
+  }
+};
 exports.deleteUserById = async (req, res, next) => {
   try {
     const result = await userServices.deleteUserById(req.params.id);

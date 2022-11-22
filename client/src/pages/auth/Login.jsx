@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import * as yup from "yup";
 import { useLoginUserMutation } from "../../features/api/userApi";
 import { toast } from "react-toastify";
@@ -83,6 +83,12 @@ const Login = () => {
                 value="Login"
               />
             </div>
+            <p className="signup-already">
+              Don't Have an Account.{" "}
+              <span className="text-primary">
+                <Link to={"/register"}>Register</Link>
+              </span>
+            </p>
           </form>
         </div>
       </div>
