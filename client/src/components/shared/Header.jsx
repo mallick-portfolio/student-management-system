@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import {
   useGetUserQuery,
@@ -42,15 +42,15 @@ const Header = () => {
           <li className="text-sm md:text-base font-semibold text-secondary dark:text-d-secondary">
             <Link to={"/"}>Research</Link>
           </li>
-          {status === "inactive" ? (
-            <li className="common-btn1">
-              <Link to={"/login"}>Login</Link>
-            </li>
-          ) : (
+          {status === "active" ? (
             <li className="common-btn1">
               <button onClick={() => signout({ status: "inactive" })}>
                 Sign out
               </button>
+            </li>
+          ) : (
+            <li className="common-btn1">
+              <Link to={"/login"}>Login</Link>
             </li>
           )}
         </ul>
