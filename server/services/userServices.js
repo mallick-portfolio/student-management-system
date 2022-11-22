@@ -44,6 +44,13 @@ exports.checkUserName = async (userName) => {
   return result;
 };
 
+exports.updateLogin = async (email, data) => {
+  const result = await User.updateOne({ email }, data, {
+    runValidators: true,
+  });
+  return result;
+};
+
 exports.hashPassword = (password, userPassowrd) => {
   return bcrypt.compareSync(password, userPassowrd);
 };

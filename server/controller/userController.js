@@ -88,6 +88,8 @@ exports.login = async (req, res, next) => {
       });
     }
 
+    await userServices.updateLogin(req.body.email, { status: "active" });
+
     const password = userServices.hashPassword(
       req.body.password,
       user.password

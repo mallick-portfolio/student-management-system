@@ -15,7 +15,7 @@ export const userApi = createApi({
           },
         };
       },
-      invalidatesTags: [{ type: "Users" }],
+      providesTags: ["Users"],
     }),
     signupUser: builder.mutation({
       query(body) {
@@ -25,7 +25,7 @@ export const userApi = createApi({
           body,
         };
       },
-      invalidatesTags: [{ type: "Users" }],
+      invalidatesTags: ["Users"],
     }),
     loginUser: builder.mutation({
       query(body) {
@@ -35,7 +35,7 @@ export const userApi = createApi({
           body,
         };
       },
-      invalidatesTags: [{ type: "Users" }],
+      invalidatesTags: ["Users"],
     }),
     signOutUser: builder.mutation({
       query(body) {
@@ -48,7 +48,7 @@ export const userApi = createApi({
           body,
         };
       },
-      invalidatesTags: [{ type: "Users" }],
+      invalidatesTags: ["Users"],
     }),
   }),
 });

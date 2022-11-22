@@ -10,6 +10,7 @@ const Header = () => {
   const [signout] = useSignOutUserMutation();
 
   const status = data?.data?.status;
+
   if (error) {
     console.log(error);
   }
