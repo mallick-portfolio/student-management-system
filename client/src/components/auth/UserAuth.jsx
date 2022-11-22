@@ -3,6 +3,7 @@ import React from "react";
 import { Navigate, Outlet } from "react-router-dom";
 import { useGetUserQuery } from "../../features/api/userApi";
 import Header from "../shared/Header";
+import Sidebar from "../shared/Sidebar";
 
 const UserAuth = () => {
   const { data, error, isLoading } = useGetUserQuery();
@@ -17,7 +18,10 @@ const UserAuth = () => {
   return userType === "student" && status === "active" ? (
     <>
       <Header />
-      <Outlet />
+      <Sidebar />
+      <main className="container">
+        <Outlet />
+      </main>
     </>
   ) : (
     <Navigate to="/login" />

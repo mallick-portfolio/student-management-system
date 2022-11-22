@@ -26,7 +26,7 @@ const App = () => {
         theme={darkMode ? "dark" : "light"}
       />
       <button
-        className="px-4 py-2 rounded-md bg-black fixed bottom-5 right-5 text-white dark:text-black dark:bg-white"
+        className="px-4 py-2 rounded-md bg-black fixed bottom-5 right-5 text-white dark:text-black dark:bg-white overflow-hidden"
         onClick={() => setDarkMode(!darkMode)}
       >
         change mode
