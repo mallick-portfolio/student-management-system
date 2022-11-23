@@ -1,12 +1,14 @@
 import React from "react";
 
-import { Navigate, Outlet } from "react-router-dom";
+import { Navigate, Outlet, useLocation } from "react-router-dom";
 import { useGetUserQuery } from "../../features/api/userApi";
 import Header from "../shared/Header";
 import Sidebar from "../shared/Sidebar";
 
 const UserAuth = () => {
   const { data, error, isLoading } = useGetUserQuery();
+  const location = useLocation();
+
   if (isLoading) {
     return "loading...";
   }
@@ -24,7 +26,7 @@ const UserAuth = () => {
       </main>
     </>
   ) : (
-    <Navigate to="/login" />
+    <Navigate to="/login" replace state={{ from: location }} />
   );
 };
 

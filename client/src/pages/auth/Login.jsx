@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import * as yup from "yup";
 import { useLoginUserMutation } from "../../features/api/userApi";
 import { toast } from "react-toastify";
@@ -13,9 +13,11 @@ const schema = yup
   .required();
 
 const Login = () => {
-  const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [signup] = useLoginUserMutation();
+  let navigate = useNavigate();
+  let location = useLocation();
+  let from = location.state?.from?.pathname || "/";
 
   const {
     register,
@@ -29,7 +31,7 @@ const Login = () => {
     if (res.data.status === "success") {
       localStorage.setItem("accessToken", `Berear ${res.data.token}`);
       toast.success(res?.data.message);
-      navigate("/");
+      navigate(from, { replace: true });
     } else {
       toast.warning(res?.data.error);
       navigate("/login");
