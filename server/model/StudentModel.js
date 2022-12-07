@@ -9,6 +9,14 @@ const studentSchema = mongoose.Schema({
     type: String,
     trim: true,
   },
+  roll: {
+    type: Number,
+    required: true,
+  },
+  registration: {
+    type: Number,
+    required: true,
+  },
   contactNumber: {
     type: String,
   },
@@ -18,12 +26,8 @@ const studentSchema = mongoose.Schema({
     type: String,
   },
   session: {
-    type: ObjectId,
-    ref: "Session",
-  },
-  userId: {
-    type: ObjectId,
-    ref: "User",
+    type: String,
+    required: true,
   },
   resultId: {
     type: ObjectId,

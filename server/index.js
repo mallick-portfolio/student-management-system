@@ -6,6 +6,7 @@ const { errorHander, notFoundHandler } = require("./middleware/errorHandler");
 require("dotenv").config();
 const userRouter = require("./router/v1/user.router");
 const dbConnection = require("./server");
+const studentRouter = require("./router/v1/student.router");
 
 // build in middleware
 app.use(cors());
@@ -18,7 +19,9 @@ app.get("/", (req, res) => {
 // db connection
 dbConnection();
 // custom api route
+
 app.use("/api/v1/user", userRouter);
+app.use("/api/v1/student", studentRouter);
 
 app.use(notFoundHandler);
 // error handler middleware
